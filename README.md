@@ -1,4 +1,4 @@
-    /*
+      /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
@@ -7,7 +7,6 @@ package com.mycompany.midtermprojectacp;
 import java.util.*;
 import java.io.*;
 
-// ======================= BASE CLASS ==========================
 class Person {
     String name;
     String contact_information;
@@ -18,7 +17,6 @@ class Person {
     }
 }
 
-// ======================= DERIVED CLASS =======================
 class User extends Person {
     int userID;
     int borrowed_booksID;
@@ -30,7 +28,6 @@ class User extends Person {
     }
 }
 
-// ======================= CLASS: BOOK ==========================
 class Book {
     int bookID;
     String title;
@@ -47,7 +44,6 @@ class Book {
     }
 }
 
-// ======================= CLASS: LIBRARY =======================
 class Library {
     Scanner sc = new Scanner(System.in);
     Random random = new Random();
@@ -55,7 +51,6 @@ class Library {
     static ArrayList<Book> bookCollection = new ArrayList<>();
     static ArrayList<User> userCollection = new ArrayList<>();
 
-    // ---------- Add new book ----------
     void addNewBook() {
         Book newBook = new Book();
         while (true) {
@@ -80,7 +75,6 @@ class Library {
         bookFileWrite("C:\\BookStorage", newBook);
     }
 
-    // ---------- Add new user ----------
     void addNewUser() {
         User newUser = new User();
         while (true) {
@@ -94,7 +88,8 @@ class Library {
                 newUser.contact_information = sc.next();
                 newUser.borrowed_booksID = 0;
                 break;
-            } catch (Exception e) {
+            } 
+            catch (Exception e) {
                 System.out.println("Invalid input! Try again");
                 sc.next();
             }
@@ -103,7 +98,6 @@ class Library {
         userFileWrite("C:\\UserStorage", newUser);
     }
 
-    // ---------- Display specific book ----------
     static void displayBooks(final int a) {
         boolean flag = false;
         for (Book book : bookCollection) {
@@ -114,16 +108,17 @@ class Library {
                             book.bookID, book.title, book.author, book.genre, book.availability_status);
                     flag = true;
                     break;
-                } else {
+                } 
+                else {
                     System.out.println("Sorry, the book has already been borrowed!");
                     flag = true;
                 }
             }
         }
+        
         if (!flag) System.out.println("Book not found!");
     }
 
-    // ---------- Borrow a book ----------
     void borrowBook(int uID, int bID) {
         try (RandomAccessFile reader = new RandomAccessFile("C:\\BookStorage", "r")) {
             String line;
@@ -138,7 +133,8 @@ class Library {
                 }
                 i++;
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.out.println("Error borrowing book: " + e);
         }
 
@@ -155,12 +151,12 @@ class Library {
                 }
                 i++;
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.out.println("Error updating user borrow record: " + e);
         }
     }
 
-    // ---------- Return a book ----------
     void bookReturn(int uId, int bId) {
         try (RandomAccessFile raf = new RandomAccessFile("C:\\UserStorage", "rw")) {
             String line;
@@ -174,7 +170,8 @@ class Library {
                 }
                 i++;
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.out.println("Error returning book for user!");
         }
 
@@ -190,17 +187,18 @@ class Library {
                 }
                 i++;
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.out.println("Error returning book for library!");
         }
     }
 
-    // ---------- File Operations ----------
     static void fileCreation(String filename) {
         try {
             File file = new File(filename);
             if (file.createNewFile()) System.out.println("New file created!");
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.out.println("Could not create the file");
         }
     }
@@ -221,14 +219,16 @@ class Library {
                     newBook.availability_status = y.equals("1");
                     bookCollection.add(newBook);
                     n += 6;
-                } else if (i == 1 + n) a = line;
+                } 
+                else if (i == 1 + n) a = line;
                 else if (i == 2 + n) b = line;
                 else if (i == 3 + n) c = line;
                 else if (i == 4 + n) d = line;
                 else if (i == 5 + n) y = line;
                 i++;
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -238,7 +238,8 @@ class Library {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             writer.write(object.bookID + "\n" + object.title + "\n" + object.author + "\n" +
                     object.genre + "\n" + (object.availability_status ? "1" : "0") + "\n-\n");
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.out.println("Could not write book to file");
         }
     }
@@ -267,13 +268,15 @@ class Library {
                     newUser.borrowed_booksID = Integer.parseInt(d);
                     userCollection.add(newUser);
                     n += 5;
-                } else if (i == 1 + n) a = line;
+                } 
+                else if (i == 1 + n) a = line;
                 else if (i == 2 + n) b = line;
                 else if (i == 3 + n) c = line;
                 else if (i == 4 + n) d = line;
                 i++;
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -283,7 +286,9 @@ class Library {
         fileReadBook();
         System.out.println("Available books:");
         for (Book book : bookCollection) {
-            if (book.availability_status) System.out.println(book.bookID);
+            if (book.availability_status){
+            System.out.println(book.bookID);
+            }
         }
     }
 
@@ -301,7 +306,6 @@ class Library {
     }
 }
 
-// ======================= MAIN CLASS =======================
 public class MidtermProjectACP {
     static void menu() {
         Scanner sc = new Scanner(System.in);
@@ -311,6 +315,7 @@ public class MidtermProjectACP {
         while (true) {
             try {
                 System.out.println("_________________ Library Management System _________________");
+                System.out.println("");
                 System.out.println("1. Add new book");
                 System.out.println("2. Add new user/member");
                 System.out.println("3. Display book");
@@ -320,6 +325,8 @@ public class MidtermProjectACP {
                 System.out.println("7. Display user IDs");
                 System.out.println("8. Search Book (by user id)");
                 System.out.println("9. Exit");
+                System.out.println("");
+                System.out.println("Enter your choice by pressig the numbers from 1 to 9: ");
                 input = sc.nextInt();
 
                 switch (input) {
